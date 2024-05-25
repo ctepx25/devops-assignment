@@ -1,0 +1,5 @@
+mongo_hostname: my-mongodb
+mongo_db: vi
+mongo_user: dev
+mongo_pass: redhat
+image: none
