@@ -1,18 +1,15 @@
-### 1. Create aws infrastructure (vpc & eks cluster):
+### 1. Create aws infrastructure (vpc & eks cluster) and update kubeconfig:
 ```sh
 cd terraform-infra
 terraform init
 terraform apply
+aws eks --region us-east-1 update-kubeconfig --name <cluster name>
 ```
 ### 2. Create node app docker image (this will return the image ECR url):
 ```sh
 cd terraform-infra
 terraform init
 terraform apply
-```
-#### 4. Update kubeconfig:
-```sh
-aws eks --region us-east-1 update-kubeconfig --name <cluster name>
 ```
 ### 3. Deploy both node-app and MongoDb.
 ```
