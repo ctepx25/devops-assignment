@@ -16,7 +16,7 @@ terraform apply
 ```
 ### 2. Create node app docker image (this will return the image ECR url):
 ```sh
-cd terraform-infra
+cd terraform-docker-image
 terraform init
 terraform apply
 ```
