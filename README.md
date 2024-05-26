@@ -1,6 +1,9 @@
 The environment consists of MongoDB and two Node apps deployed on EKS.
+
 Both Node services use the same image but different `ENTRYPOINT`: `["node", "/service1/index.js"] or  ["node", "/service2/index.js"]`
+
 MongoDB installed from bitnami/mongodb chart
+
 Node app chart can be found in `./k8s` folder.
 
 ##  Infrastructure provision and code deploy
