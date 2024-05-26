@@ -36,7 +36,7 @@ terraform apply
 ---
 - ##### Node app access:
   Since there's no Route53 integration, Ingress maps services to a dummy domain: `service1-node-app.io` & `service2-node-app.io`
-  In order to access them please udate /etc/hosts file: 
+  In order to access them please update /etc/hosts file: 
 ```sh
 IP=$(nslookup $(kubectl get ingress node-app-ingress|awk 'NR==2 {print $4}')|awk '/Address:/ {print $2}'|tail -n 1) && echo -e "${IP} service1-node-app.io\n${IP} service2-node-app.io"|sudo tee -a /etc/hosts
 ```
