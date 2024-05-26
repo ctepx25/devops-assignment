@@ -43,8 +43,8 @@ IP=$(nslookup $(kubectl get ingress node-app-ingress|awk 'NR==2 {print $4}')|awk
 - ##### MongoDB access:
   Forward mongo port to your localhost:
 ```sh
-    kubectl port-forward --namespace default svc/my-mongodb 27017:27017 &
-    mongosh --host 127.0.0.1 --authenticationDatabase admin -p $MONGODB_ROOT_PASSWORD
+    kubectl port-forward --namespace default svc/mongodb 27017:27017 &
+    mongosh --host 127.0.0.1 --authenticationDatabase admin -u root -p redhat
 ```
 
 ## Cleanup
