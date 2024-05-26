@@ -27,14 +27,6 @@ module "eks_admins_iam_role" {
   trusted_role_arns       = ["arn:aws:iam::${module.vpc.vpc_owner_id}:root"]
 }
 
-module "user1_iam_user" {
-    source = "terraform-aws-modules/iam/aws//modules/iam-user"
-    name = "user1"
-    create_iam_access_key = false
-    create_iam_user_login_profile = false
-    force_destroy = true
-}
-
 module "allow_assume_eks_admins_iam_policy" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
 
@@ -50,15 +42,6 @@ module "allow_assume_eks_admins_iam_policy" {
       }
     ]
   })
-}
-
-module "eks_admin_iam_group" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-group-with-policies"
-  name = "eks-admin"
-  attach_iam_self_management_policy = false
-  create_group                      = true
-  group_users                       = [module.user1_iam_user.iam_user_name]
-  custom_group_policy_arns          = [module.allow_assume_eks_admins_iam_policy.arn]
 }
 
 
