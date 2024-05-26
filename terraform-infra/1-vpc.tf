@@ -29,6 +29,6 @@ module "vpc" {
 
   tags = {
     Environment = "staging"
-    Name        = "main"
+    Name        = "${var.vpc_name}"
   }
 }

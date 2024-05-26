@@ -40,7 +40,7 @@ variable "node_app_image" {
 
 variable "node_app_chart_path" {
   type    = string
-  default = "../k8s/vi-tech-chart-0.1.0.tgz"
+  default = "../k8s/node-app-chart-0.1.0.tgz"
 }
 
 provider "helm" {
