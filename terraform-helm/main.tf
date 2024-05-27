@@ -114,3 +114,31 @@ resource "helm_release" "node-app" {
     value = var.mongo_db
   }
 }
+
+
+data "kubernetes_service" "service1" {
+  depends_on = [helm_release.node-app]
+  metadata {
+    name = "node-app-service1"
+  }
+}
+
+data "kubernetes_service" "service2" {
+  depends_on = [helm_release.node-app]
+  metadata {
+    name = "node-app-service2"
+  }
+}
+
+
+output "Service1" {
+  depends_on = [helm_release.node-app]
+  value = "${data.kubernetes_service.service1.status.0.load_balancer.0.ingress.0.hostname}"
+}
+
+
+output "Service2" {
+  depends_on = [helm_release.node-app]
+  value = "${data.kubernetes_service.service2.status.0.load_balancer.0.ingress.0.hostname}"
+}
+

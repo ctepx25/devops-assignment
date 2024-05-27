@@ -50,11 +50,14 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-service1
   namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
 spec:
-  ports:
-  - port: 3000
-    protocol: TCP
-  type: ClusterIP
   selector:
     app: {{ .Release.Name }}-app1
-
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
