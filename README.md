@@ -31,15 +31,17 @@ cd terraform-helm
 terraform init
 terraform apply
 ```
+This will return output with DNS addresses for both node services.
+Example:
+```sh
+Outputs:
+
+`Service1 = "a1f8e2bcdeb05487f8aa974d216a20af-35659930088016f9.elb.us-east-1.amazonaws.com"`
+`Service2 = "a01031260234b4ed5aa8bb01b0d1e1d5-81237d2320b20da9.elb.us-east-1.amazonaws.com"`
+```
 
 ## Connect to resources
 ---
-- ##### Node app access:
-  Since there's no Route53 integration, Ingress maps services to a dummy domain: `service1-node-app.io` & `service2-node-app.io`
-  In order to access them please update /etc/hosts file: 
-```sh
-IP=$(nslookup $(kubectl get ingress node-app-ingress|awk 'NR==2 {print $4}')|awk '/Address:/ {print $2}'|tail -n 1) && echo -e "${IP} service1-node-app.io\n${IP} service2-node-app.io"|sudo tee -a /etc/hosts
-```
 - ##### MongoDB access:
   Forward mongo port to your localhost:
 ```sh
@@ -47,19 +49,23 @@ IP=$(nslookup $(kubectl get ingress node-app-ingress|awk 'NR==2 {print $4}')|awk
     mongosh --host 127.0.0.1 --authenticationDatabase admin -u root -p redhat
 ```
 
-## Cleanup
+## Troubleshooting
 ---
-- ##### Uninstall helm releases
-```sh
-cd terraform-helm
-terraform destroy
+If you encounter the following error during helm installation:
+`Error: Error pinging Docker server: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?`
+Means terraform provider faild to connect to docker daemon socket or `/var/run/docker.sock` symlink is broken.
+You can find your Docker socket using the following command: `docker context ls`
+
+>Example output:
 ```
-- ##### Delete EKS cluster and ECR repo
-```sh
-cd terraform-docker-image
-terraform destroy
+NAME                DESCRIPTION                               DOCKER ENDPOINT                          ERROR
+default             Current DOCKER_HOST based configuration   unix:///var/run/docker.sock
+rancher-desktop *   Rancher Desktop moby context              unix:///Users/<user>/.rd/docker.sock
 ```
+Either fix the broken symlink `/var/run/docker.sock` --> `/Users/<user>/.rd/docker.sock`
+or just update your provider block accordingly with the socket address:
 ```
-cd terraform-infra
-terraform destroy
+provider "docker" {
+  host = "unix:///Users/<user>/.rd/docker.sock"
+}
 ```
