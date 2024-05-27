@@ -52,8 +52,11 @@ Outputs:
 ## Troubleshooting
 ---
 If you encounter the following error during helm installation:
+
 `Error: Error pinging Docker server: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?`
+
 Means terraform provider faild to connect to docker daemon socket or `/var/run/docker.sock` symlink is broken.
+
 You can find your Docker socket using the following command: `docker context ls`
 
 >Example output:
@@ -62,7 +65,9 @@ NAME                DESCRIPTION                               DOCKER ENDPOINT   
 default             Current DOCKER_HOST based configuration   unix:///var/run/docker.sock
 rancher-desktop *   Rancher Desktop moby context              unix:///Users/<user>/.rd/docker.sock
 ```
+
 Either fix the broken symlink `/var/run/docker.sock` --> `/Users/<user>/.rd/docker.sock`
+
 or just update your provider block accordingly with the socket address:
 ```
 provider "docker" {
