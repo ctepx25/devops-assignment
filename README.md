@@ -55,7 +55,7 @@ If you encounter the following error during helm installation:
 
 `Error: Error pinging Docker server: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?`
 
-Means terraform provider faild to connect to docker daemon socket or `/var/run/docker.sock` symlink is broken.
+Means terraform provider failed to connect to the docker daemon socket or `/var/run/docker.sock` symlink is broken.
 
 You can find your Docker socket using the following command: `docker context ls`
 
