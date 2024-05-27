@@ -33,7 +33,7 @@ data "aws_ecr_authorization_token" "token" {}
 
 # configure docker provider
 provider "docker" {
-  host = "unix:///Users/abadikov/.rd/docker.sock"
+  host = "unix:///var/run/docker.sock"
   registry_auth {
       address = data.aws_ecr_authorization_token.token.proxy_endpoint
       username = data.aws_ecr_authorization_token.token.user_name
