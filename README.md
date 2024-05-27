@@ -32,6 +32,7 @@ terraform init
 terraform apply
 ```
 This will return output with DNS addresses for both node services.
+
 Example:
 ```sh
 Outputs:
