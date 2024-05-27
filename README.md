@@ -52,7 +52,7 @@ Outputs:
 
 ## Troubleshooting
 ---
-If you encounter the following error during helm installation:
+If you encounter the following error during image creation:
 
 `Error: Error pinging Docker server: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?`
 
